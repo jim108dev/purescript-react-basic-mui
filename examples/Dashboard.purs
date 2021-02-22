@@ -243,14 +243,18 @@ appBar =
       pure $ DOM.div
         $ { children: _ }
             [ AppBar.appBar' $ AppBar.props
-                $ { position: AppBar.position.static
+                $ { position: AppBar.position.absolute
                   , children: _
                   }
                     [ toolbar
                         $ { children: _ }
-                            [ menuIcon $ Icons.props { onClick: handler_ (openDrawer Drawer.anchor.left) } ]
-                    , typography $ { children: _, variant: Typography.variant.h6 } <<< Array.singleton
-                        $ link { children: [ DOM.text "Dashboard" ], href: "#TEST", color: Link.color.inherit }
+                            [ IconButton.iconButton
+                                { onClick: handler_ (openDrawer anchor)
+                                , children: [ menuIcon $ Icons.props {} ]
+                                }
+                            , typography $ { children: _, variant: Typography.variant.h6 } <<< Array.singleton
+                                $ link { children: [ DOM.text "Dashboard" ], href: "#TEST", color: Link.color.inherit }
+                            ]
                     ]
             , drawer
                 $ { anchor
@@ -261,6 +265,28 @@ appBar =
                 $ [ menuList classes anchor ]
             ]
 
+{-
+           [ AppBar.appBar' $ AppBar.props
+                $ { position: AppBar.position.absolute
+                  , children: _
+                  }
+                    [ toolbar
+                        $ { children: _ }
+                            [ menuIcon
+                                $ Icons.props { onClick: handler_ (openDrawer Drawer.anchor.left) }
+                            , typography $ { children: _, variant: Typography.variant.h6 } <<< Array.singleton
+                                $ link { children: [ DOM.text "Dashboard" ], href: "#TEST", color: Link.color.inherit }
+                            ]
+                    ]
+            , drawer
+                $ { anchor
+                  , open: Just anchor == state
+                  , onClose: handler_ closeDrawer
+                  , children: _
+                  }
+                $ [ menuList classes anchor ]
+            ]
+-}
 -- | XXX:
 -- | This kind of unsafe execution should be
 -- | only on the top level of the module.
